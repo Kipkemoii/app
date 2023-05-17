@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mps
+spec:
+  selector:
+    app: mps
+  ports:
+    - name: mps
+      port: 4300
+      targetPort: 4300
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mps
+spec:
+  selector:
+    matchLabels:
+      app: mps
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: mps
+    spec:
+      containers:
+        - name: mps
+          image: docker.io/kebeney/beren:mps-0.0.38
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: username
+                  name: pgs-config-map
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: pgs-secret
+          ports:
+            - name: postgres
+              containerPort: 5432
+          volumeMounts:
+            - name: pgs-volume
+              mountPath: /var/lib/postgresql/data
+            - name: pgs-config
+              mountPath: /var/lib/postgresql/data/postsgresql.conf
+              subPath: postgresql
+              readOnly: false
+            - name: pgs-config
+              mountPath: /var/lib/postgresql/data/pg_hba.conf
+              subPath: pg_hba
+              readOnly: false
+            - name: tls-certs
+              mountPath: /opt/tls
+              readOnly: false
+      volumes:
+        - name: pgs-config
+          configMap:
+            name: pgs-config-map
+            defaultMode: 0640
+            items:
+              - key: postgresql.conf
+                path: postgresql.conf
+              - key: pg_hba.conf
+                path: pg_hba.conf
+        - name: tls-certs
+          secret:
+            secretName: beren-tls
+            defaultMode: 0600

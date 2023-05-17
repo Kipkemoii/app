@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgs-config-map
+data:
+  username: rapg
+  password: rapg
+  postgresql.conf: |
+    listen_addresses = '*'
+    wal_level = replica
+    max_wal_senders = 5
+    wal_keep_segments = 10
+    archive_mode = off
+  pg_hba.conf: |
+    host    all             all             0.0.0.0/0               md5

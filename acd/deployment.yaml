@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: acd
+spec:
+  selector:
+    app: acd
+  ports:
+    - name: acd
+      port: 3000
+      targetPort: 3000
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: acd
+spec:
+  selector:
+    matchLabels:
+      app: acd
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: acd
+    spec:
+      containers:
+        - name: acd
+          image: docker.io/kebeney/beren:acd-0.0.9
+          env:
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: "trust"
+            - name: POSTGRES_SSL_CERT_FILE
+              value: "/opt/tls/cert.pem"
+            - name: POSTGRES_SSL_KEY_FILE
+              value: "/opt/tls/priv-key.pem"
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: username
+                  name: pgs-config-map
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:\
+                
+                  key: password
+                  name: pgs-secret
+          ports:
+            - name: academy
+              containerPort: 3000
+          volumeMounts:
+            - name: pgs-volume
+              mountPath: /var/lib/postgresql/data
+            - name: pgs-config
+              mountPath: /opt
+              readOnly: false
+            - name: tls-certs
+              mountPath: /opt/tls
+              readOnly: false
+      volumes:
+        - name: pgs-config
+          configMap:
+            name: pgs-config-map
+            defaultMode: 0777
+            items:
+              - key: postgresql.conf
+                path: postgresql.conf
+              - key: pg_hba.conf
+                path: pg_hba.conf
+        - name: tls-certs
+          secret:
+            secretName: beren-tls
