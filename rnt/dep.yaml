@@ -26,6 +26,8 @@ spec:
       labels:
         app: rnt
     spec:
+      imagePullSecrets:
+        - name: beren-registry
       containers:
         - name: rnt
           image: docker.io/kebeney/beren:rnt-0.0.67

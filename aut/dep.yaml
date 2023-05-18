@@ -26,6 +26,8 @@ spec:
       labels:
         app: aut
     spec:
+      imagePullSecrets:
+        - name: beren-registry
       containers:
         - name: aut
           image: docker.io/kebeney/beren:aut-0.0.68

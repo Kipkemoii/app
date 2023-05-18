@@ -26,6 +26,8 @@ spec:
       labels:
         app: acd
     spec:
+      imagePullSecrets:
+        - name: beren-registry
       containers:
         - name: acd
           image: docker.io/kebeney/beren:acd-0.0.9

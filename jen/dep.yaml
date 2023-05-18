@@ -26,6 +26,8 @@ spec:
       labels:
         app: jen
     spec:
+      imagePullSecrets:
+        - name: beren-registry
       containers:
         - name: jen
           image: docker.io/kebeney/beren:jen-0.0.36

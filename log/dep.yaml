@@ -26,6 +26,8 @@ spec:
       labels:
         app: log
     spec:
+      imagePullSecrets:
+        - name: beren-registry
       containers:
         - name: log
           image: docker.io/kebeney/beren:log-0.0.7

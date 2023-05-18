@@ -26,6 +26,8 @@ spec:
       labels:
         app: mps
     spec:
+      imagePullSecrets:
+        - name: beren-registry
       containers:
         - name: mps
           image: docker.io/kebeney/beren:mps-0.0.38

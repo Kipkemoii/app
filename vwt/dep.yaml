@@ -26,6 +26,8 @@ spec:
       labels:
         app: vwt
     spec:
+      imagePullSecrets:
+        - name: beren-registry
       containers:
         - name: vwt
           image: docker.io/kebeney/beren:vwt-0.0.53
