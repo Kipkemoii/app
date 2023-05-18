@@ -32,14 +32,22 @@ spec:
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   key: username
-                  name: mgo-config-map
+                  name: mgo-secret
             - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: password
                   name: mgo-secret
+            - name: MONGO_TLS_MODE
+              value: requireTLS
+            - name: MONGO_TLS_CERTIFICATE_KEY_FILE
+              value: /opt/tls/cert.pem
+            - name: MONGO_TLS_PRIVATE_KEY_FILE
+              value: /opt/tls/priv-key.pem
+            - name: MONGO_TLS_CA_FILE
+              value: /opt/tls/ca.pem
           ports:
             - name: mgo
               containerPort: 27017
@@ -48,19 +56,19 @@ spec:
               mountPath: /data/db
             - name: tls-certs
               mountPath: /opt/tls
-              readOnly: false
+              readOnly: true
+            - name: init-script
+              mountPath: /docker-entrypoint-initdb.d/init-replica-set.sh
+              subPath: init-replica-set.sh
+              readOnly: true
       volumes:
-        - name: mgo-config
-          configMap:
-            name: mgo-config-map
-            defaultMode: 0640
-            items:
-              - key: postgresql.conf
-                path: postgresql.conf
         - name: tls-certs
           secret:
             secretName: beren-tls
             defaultMode: 0600
+        - name: init-script
+          configMap:
+            name: mongodb-init-scripts
   volumeClaimTemplates:
     - metadata:
         name: mgo-volume

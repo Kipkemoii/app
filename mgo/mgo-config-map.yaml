@@ -1,14 +1,22 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: mgo-config-map
+  name: mongodb-init-scripts
 data:
-  username: mgoadm
-  postgresql.conf: |
-    listen_addresses = '*'
-    wal_level = replica
-    max_wal_senders = 5
-    wal_keep_segments = 10
-    archive_mode = off
-  pg_hba.conf: |
-    host    all             all             0.0.0.0/0               md5
+  init-replica-set.sh: |
+    #!/bin/bash
+
+    # Wait for the MongoDB primary node to be ready
+    until mongo --host mongodb-0.mongodb --eval "db.isMaster().ismaster" | grep true >/dev/null 2>&1; do
+      echo "Waiting for MongoDB primary node to be ready..."
+      sleep 5
+    done
+
+    # Initialize the replica set
+    echo "Initializing MongoDB replica set..."
+    mongo --host mongodb-0.mongodb --eval "rs.initiate()"
+
+    # Add secondary nodes to the replica set
+    echo "Adding MongoDB secondary nodes to the replica set..."
+    mongo --host mongodb-0.mongodb --eval "rs.add('mongodb-1.mongodb')"
+    mongo --host mongodb-0.mongodb --eval "rs.add('mongodb-2.mongodb')"
