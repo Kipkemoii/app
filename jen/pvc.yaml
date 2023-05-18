@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jen-pvc
+spec:
+  storageClassName: local-storage
+  accessModes: 
+    - ReadWrireOnce
+  resources:
+    requests:
+      storage: 1Gi

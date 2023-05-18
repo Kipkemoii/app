@@ -1,34 +1,34 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: acd-svc
+  name: log-svc
 spec:
   selector:
-    app: acd
+    app: log
   ports:
-    - name: acd
-      port: 3000
-      targetPort: 3000
+    - name: log
+      port: 4600
+      targetPort: 4600
   type: LoadBalancer
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: acd
+  name: log
 spec:
   selector:
     matchLabels:
-      app: acd
+      app: log
   replicas: 2
   template:
     metadata:
       labels:
-        app: acd
+        app: log
     spec:
       containers:
-        - name: acd
-          image: docker.io/kebeney/beren:acd-0.0.9
+        - name: log
+          image: docker.io/kebeney/beren:log-0.0.7
           env:
             - name: VLT_PROTO
               value: https
@@ -39,7 +39,7 @@ spec:
             - name: LOG_PROTO
               value: https 
             - name: LOG_IP
-              value: log-svc.default
+              value: kberen.com
             - name: LOG_HTTP_PORT
               value: '4600'
             - name: AUT_PROTO
@@ -49,20 +49,20 @@ spec:
             - name: AUT_HTTP_PORT
               value: '4000'
             - name: TARGET_DB
-              value: acd
+              value: log
           ports:
-            - name: academy
-              containerPort: 3000
+            - name: log
+              containerPort: 4600
           volumeMounts:
-            - name: acd-volume
-              mountPath: /opt/acd/data
+            - name: log-volume
+              mountPath: /opt/log/data
             - name: tls-certs
-              mountPath: /opt/acd/tls
+              mountPath: /opt/log/tls
               readOnly: false
       volumes:
-        - name: acd-volume
+        - name: log-volume
           persistentVolumeClaim:
-            claimName: acd-pvc
+            claimName: log-pvc
         - name: tls-certs
           secret:
             secretName: beren-tls

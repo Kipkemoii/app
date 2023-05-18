@@ -1,81 +1,69 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: pgs
+  name: mgo
 spec:
   selector:
-    app: pgs
+    app: mgo
   ports:
-    - name: postgres
-      port: 5432
-      targetPort: 5432
+    - name: mgo
+      port: 27017
+      targetPort: 27017
   type: ClusterIP
 
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: pgs
+  name: mgo
 spec:
   selector:
     matchLabels:
-      app: pgs
+      app: mgo
   replicas: 2
   template:
     metadata:
       labels:
-        app: pgs
+        app: mgo
     spec:
       containers:
-        - name: pgs
-          image: docker.io/library/postgres:15-alpine
+        - name: mgo
+          image: docker.io/library/mongo:6
           env:
-            - name: POSTGRES_USER
+            - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
                 configMapKeyRef:
                   key: username
-                  name: pgs-config-map
-            - name: POSTGRES_PASSWORD
+                  name: mgo-config-map
+            - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: password
-                  name: pgs-secret
+                  name: mgo-secret
           ports:
-            - name: postgres
-              containerPort: 5432
+            - name: mgo
+              containerPort: 27017
           volumeMounts:
-            - name: pgs-volume
-              mountPath: /var/lib/postgresql/data
-            - name: pgs-config
-              mountPath: pg_hba.conf
-              readOnly: false
+            - name: mgo-volume
+              mountPath: /data/db
             - name: tls-certs
               mountPath: /opt/tls
               readOnly: false
-          args:
-            - "-c"
-            - "ssl=on"
-            - "-c"
-            - "ssl_cert_file=/opt/tls/cert.pem"
-            - "-c"
-            - "ssl_key_file=/opt/tls/priv-key.pem"
       volumes:
-        - name: pgs-config
+        - name: mgo-config
           configMap:
-            name: pgs-config-map
+            name: mgo-config-map
             defaultMode: 0640
             items:
               - key: postgresql.conf
                 path: postgresql.conf
-              - key: pg_hba.conf
-                path: pg_hba.conf
         - name: tls-certs
           secret:
             secretName: beren-tls
             defaultMode: 0600
   volumeClaimTemplates:
     - metadata:
-        name: pgs-volume
+        name: mgo-volume
       spec:
         accessModes: ["ReadWriteOnce"]
         storageClassName: managed-nfs-storage

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mps
+  name: mps-svc
 spec:
   selector:
     app: mps
@@ -9,7 +9,7 @@ spec:
     - name: mps
       port: 4300
       targetPort: 4300
-  type: ClusterIP
+  type: LoadBalancer
 
 ---
 apiVersion: apps/v1
@@ -35,15 +35,21 @@ spec:
             - name: VLT_IP
               value: kberen.com
             - name: VLT_TCP_PORT
-              value: 8200
+              value: '8200'
+            - name: LOG_PROTO
+              value: https 
+            - name: LOG_IP
+              value: log-svc.default
+            - name: LOG_HTTP_PORT
+              value: '4600'
           ports:
-            - name: postgres
-              containerPort: 5432
+            - name: mps
+              containerPort: 4300
           volumeMounts:
             - name: mps-volume
-              mountPath: /opt/pgs/data
+              mountPath: /opt/mps/data
             - name: tls-certs
-              mountPath: /opt/pgs/tls
+              mountPath: /opt/mps/tls
               readOnly: false
       volumes:
         - name: mps-volume
