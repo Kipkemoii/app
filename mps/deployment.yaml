@@ -51,7 +51,7 @@ spec:
             - name: mps-volume
               mountPath: /opt/mps/data
             - name: tls-certs
-              mountPath: /opt/mps/tls
+              mountPath: /opt/shared/tls/keb
               readOnly: false
       volumes:
         - name: mps-volume

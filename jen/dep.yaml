@@ -51,7 +51,7 @@ spec:
             - name: aut-volume
               mountPath: /opt/jen/data
             - name: tls-certs
-              mountPath: /opt/jen/tls
+              mountPath: /opt/shared/tls/keb
               readOnly: false
       volumes:
         - name: aut-volume

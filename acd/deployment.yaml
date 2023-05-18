@@ -59,7 +59,7 @@ spec:
             - name: acd-volume
               mountPath: /opt/acd/data
             - name: tls-certs
-              mountPath: /opt/acd/tls
+              mountPath: /opt/shared/tls/keb
               readOnly: false
       volumes:
         - name: acd-volume

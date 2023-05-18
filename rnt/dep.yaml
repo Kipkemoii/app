@@ -61,7 +61,7 @@ spec:
             - name: rnt-volume
               mountPath: /opt/rnt/data
             - name: tls-certs
-              mountPath: /opt/rnt/tls
+              mountPath: /opt/shared/tls/keb
               readOnly: false
       volumes:
         - name: rnt-volume

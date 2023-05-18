@@ -71,7 +71,7 @@ spec:
             - name: aut-volume
               mountPath: /opt/vwt/data
             - name: tls-certs
-              mountPath: /opt/vwt/tls
+              mountPath: /opt/shared/tls/keb
               readOnly: false
       volumes:
         - name: vwt-volume

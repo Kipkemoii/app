@@ -59,7 +59,7 @@ spec:
             - name: log-volume
               mountPath: /opt/log/data
             - name: tls-certs
-              mountPath: /opt/log/tls
+              mountPath: /opt/shared/tls/keb
               readOnly: false
       volumes:
         - name: log-volume
