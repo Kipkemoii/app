@@ -30,43 +30,25 @@ spec:
         - name: mps
           image: docker.io/kebeney/beren:mps-0.0.38
           env:
-            - name: POSTGRES_USER
-              valueFrom:
-                configMapKeyRef:
-                  key: username
-                  name: pgs-config-map
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: password
-                  name: pgs-secret
+            - name: VLT_PROTO
+              value: https
+            - name: VLT_IP
+              value: kberen.com
+            - name: VLT_TCP_PORT
+              value: 8200
           ports:
             - name: postgres
               containerPort: 5432
           volumeMounts:
-            - name: pgs-volume
-              mountPath: /var/lib/postgresql/data
-            - name: pgs-config
-              mountPath: /var/lib/postgresql/data/postsgresql.conf
-              subPath: postgresql
-              readOnly: false
-            - name: pgs-config
-              mountPath: /var/lib/postgresql/data/pg_hba.conf
-              subPath: pg_hba
-              readOnly: false
+            - name: mps-volume
+              mountPath: /opt/pgs/data
             - name: tls-certs
-              mountPath: /opt/tls
+              mountPath: /opt/pgs/tls
               readOnly: false
       volumes:
-        - name: pgs-config
-          configMap:
-            name: pgs-config-map
-            defaultMode: 0640
-            items:
-              - key: postgresql.conf
-                path: postgresql.conf
-              - key: pg_hba.conf
-                path: pg_hba.conf
+        - name: mps-volume
+          persistentVolumeClaim:
+            claimName: mps-pvc
         - name: tls-certs
           secret:
             secretName: beren-tls

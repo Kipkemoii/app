@@ -3,3 +3,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: mps-pvc
 spec:
+  storageClassName: local-storage
+  accessModes: 
+    - ReadWrireOnce
+  resources:
+    requests:
+      storage: 1Gi
