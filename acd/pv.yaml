@@ -8,7 +8,7 @@ spec:
   volumeMode: Filesystem
   accessModes:
   - ReadWriteMany
-  persistentVolumeReclaimPolicy: Delete
+  persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
     path: /opt/k8/acd
