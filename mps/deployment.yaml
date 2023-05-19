@@ -49,15 +49,22 @@ spec:
               containerPort: 4300
           volumeMounts:
             - name: mps-volume
-              mountPath: /opt/mps/data
-            - name: tls-certs
+              mountPath: /opt/shared/data
+            - name: keb-certs
               mountPath: /opt/shared/tls/keb
+              readOnly: false
+            - name: le-certs
+              mountPath: /opt/shared/tls/le
               readOnly: false
       volumes:
         - name: mps-volume
           persistentVolumeClaim:
             claimName: mps-pvc
-        - name: tls-certs
+        - name: le-certs
           secret:
-            secretName: beren-tls
+            secretName: le-tls
+            defaultMode: 0600
+        - name: keb-certs
+          secret:
+            secretName: keb-tls
             defaultMode: 0600

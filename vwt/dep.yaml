@@ -35,7 +35,7 @@ spec:
             - name: VLT_PROTO
               value: https
             - name: VLT_IP
-              value: kberen.com
+              value: '192.168.86.5'
             - name: VLT_TCP_PORT
               value: '8200'
             - name: LOG_PROTO
@@ -69,15 +69,22 @@ spec:
               containerPort: 4500
           volumeMounts:
             - name: aut-volume
-              mountPath: /opt/vwt/data
-            - name: tls-certs
+              mountPath: /opt/shared/data
+            - name: keb-certs
               mountPath: /opt/shared/tls/keb
+              readOnly: false
+            - name: le-certs
+              mountPath: /opt/shared/tls/le
               readOnly: false
       volumes:
         - name: vwt-volume
           persistentVolumeClaim:
             claimName: vwt-pvc
-        - name: tls-certs
+        - name: le-certs
           secret:
-            secretName: beren-tls
+            secretName: le-tls
+            defaultMode: 0600
+        - name: keb-certs
+          secret:
+            secretName: keb-tls
             defaultMode: 0600

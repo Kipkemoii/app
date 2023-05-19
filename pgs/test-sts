@@ -26,6 +26,13 @@ spec:
       labels:
         app: pgs
     spec:
+      initContainers:
+  - name: adjust-permissions
+    image: busybox
+    command: ["sh", "-c", "chmod 644 /opt/tls/cert.pem"]
+    volumeMounts:
+      - name: cert-volume
+        mountPath: /opt/tls
       containers:
         - name: pgs
           image: docker.io/library/postgres:15-alpine
