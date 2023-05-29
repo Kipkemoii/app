@@ -27,12 +27,13 @@ spec:
         app: pgs
     spec:
       initContainers:
-  - name: adjust-permissions
-    image: busybox
-    command: ["sh", "-c", "chmod 644 /opt/tls/cert.pem"]
-    volumeMounts:
-      - name: cert-volume
-        mountPath: /opt/tls
+        - name: pms
+          image: busybox
+          command: ["sh", "-c", "mkdir -p /certs/modified && cp /certs/cert.pem /certs/priv-key.pem /certs/modified/ && chmod 0640 /certs/modified/cert.pem && chmod 0600 /certs/modified/priv-key.pem"]
+          volumeMounts:
+            - name: tls-certs
+              mountPath: /certs
+              readOnly: false
       containers:
         - name: pgs
           image: docker.io/library/postgres:15-alpine
@@ -58,7 +59,14 @@ spec:
               readOnly: false
             - name: tls-certs
               mountPath: /opt/tls
-              readOnly: false
+              readOnly: true
+          args:
+            - "-c"
+            - "ssl=on"
+            - "-c"
+            - "ssl_cert_file=/opt/tls/cert.pem"
+            - "-c"
+            - "ssl_key_file=/opt/tls/priv-key.pem"
       volumes:
         - name: pgs-config
           configMap:
@@ -71,8 +79,13 @@ spec:
                 path: pg_hba.conf
         - name: tls-certs
           secret:
-            secretName: beren-tls
-            defaultMode: 0600
-        - name: pgs-volume
-          persistentVolumeClaim:
-            claimName: pgs-pvc
+            secretName: le-tls
+  volumeClaimTemplates:
+    - metadata:
+        name: pgs-volume
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: managed-nfs-storage
+        resources:
+          requests:
+            storage: 2Gi

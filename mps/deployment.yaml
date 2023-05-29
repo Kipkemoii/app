@@ -44,6 +44,14 @@ spec:
               value: log-svc.default
             - name: LOG_HTTP_PORT
               value: '4600'
+            - name: ROLE_ID
+              value: 8f686c1d-8edd-dc19-b8e7-963c67b0ec45
+            - name: SECRET_ID
+              value: c737da35-ec93-3ad0-a0f3-0892a48b04d6
+            - name: AUTH_CLIENT_ID
+              value: 7bebf99f-8393-4b2f-983e-2d79c1e8dc15
+            - name: AUTH_CLIENT_SECRET
+              value: taSbrEd7VQTS0IMPMAzoOAkP5HeOUibS4h5R7k9v6gbuRYXHrTy89pajzBLZ+/5Uv1oi8tXFevFusLHWlxmHMQ==
           ports:
             - name: mps
               containerPort: 4300

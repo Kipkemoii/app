@@ -26,6 +26,15 @@ spec:
       labels:
         app: pgs
     spec:
+      initContainers:
+        - name: set-permissions
+          image: busybox
+          command: ["sh", "-c", "cp /certs/cert.pem /certs/priv-key.pem /tmp/ && chmod 0755 /tmp/cert.pem && chmod 0600 /tmp/priv-key.pem && chmod 0755 /tmp/cert.pem && chmod 0600 /tmp/priv-key.pem && chcon -t container_file_t /tmp/cert.pem && chcon -t container_file_t /tmp/priv-key.pem"]
+          volumeMounts:
+            - name: tls-certs
+              mountPath: /certs
+            - name: temp
+              mountPath: /tmp
       containers:
         - name: pgs
           image: docker.io/library/postgres:15-alpine
@@ -51,14 +60,16 @@ spec:
               readOnly: false
             - name: tls-certs
               mountPath: /opt/tls
-              readOnly: false
+              readOnly: true
+            - name: temp
+              mountPath: /tmp
           args:
             - "-c"
             - "ssl=on"
             - "-c"
-            - "ssl_cert_file=/opt/tls/cert.pem"
+            - "ssl_cert_file=/tmp/cert.pem"
             - "-c"
-            - "ssl_key_file=/opt/tls/priv-key.pem"
+            - "ssl_key_file=/tmp/priv-key.pem"
       volumes:
         - name: pgs-config
           configMap:
@@ -71,8 +82,9 @@ spec:
                 path: pg_hba.conf
         - name: tls-certs
           secret:
-            secretName: beren-tls
-            defaultMode: 0600
+            secretName: le-tls
+        - name: temp
+          emptyDir: {}
   volumeClaimTemplates:
     - metadata:
         name: pgs-volume

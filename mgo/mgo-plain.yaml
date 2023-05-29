@@ -26,9 +26,19 @@ spec:
       labels:
         app: mgo
     spec:
+      initContainers:
+      - name: init-certs
+        image: busybox
+        command: ["sh", "-c", "chown -R 999:999 /opt/tls"]
+        volumeMounts:
+        - name: mgo-tls
+          mountPath: /opt/tls
       containers:
         - name: mgo
           image: docker.io/library/mongo:6
+          args:
+            - --config
+            - /etc/mongo/mongod.conf
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
@@ -40,31 +50,25 @@ spec:
                 secretKeyRef:
                   key: password
                   name: mgo-secret
-            - name: MONGO_INITDB_TLS_MODE
-              value: requireTLS
-            - name: MONGO_TLS_CERTIFICATE_KEY_FILE
-              value: /opt/tls/cert.pem
           ports:
             - name: mgo
               containerPort: 27017
           volumeMounts:
             - name: mgo-volume
               mountPath: /data/db
+            - name: mongo-config
+              mountPath: /etc/mongo
             - name: tls-certs
               mountPath: /opt/tls
-              readOnly: true
-            - name: init-script
-              mountPath: /docker-entrypoint-initdb.d/init-replica-set.sh
-              subPath: init-replica-set.sh
-              readOnly: true
+              readOnly: false
       volumes:
+        - name: mongo-config
+          configMap:
+            name: mongo-config
         - name: tls-certs
           secret:
             secretName: mgo-tls
-            defaultMode: 0600
-        - name: init-script
-          configMap:
-            name: mongodb-init-scripts
+            defaultMode: 0640
   volumeClaimTemplates:
     - metadata:
         name: mgo-volume

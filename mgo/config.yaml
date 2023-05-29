@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-config
+data:
+  mongod.conf: |
+    security:
+      authorization: enabled
+    net:
+      tls:
+        mode: requireTLS
+        certificateKeyFile: /opt/tls/cert.pem
+        CAFile: /opt/tls/ca.pem
+        allowConnectionsWithoutCertificates: true
