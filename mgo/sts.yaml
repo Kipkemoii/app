@@ -40,10 +40,7 @@ spec:
                 secretKeyRef:
                   key: password
                   name: mgo-secret
-            - name: MONGO_INITDB_TLS_MODE
-              value: requireTLS
-            - name: MONGO_TLS_CERTIFICATE_KEY_FILE
-              value: /opt/tls/cert.pem
+          args: ["--tlsMode=requireTLS", "--tlsCertificateKeyFile=/opt/tls/cert.pem"]
           ports:
             - name: mgo
               containerPort: 27017
@@ -52,19 +49,10 @@ spec:
               mountPath: /data/db
             - name: tls-certs
               mountPath: /opt/tls
-              readOnly: true
-            - name: init-script
-              mountPath: /docker-entrypoint-initdb.d/init-replica-set.sh
-              subPath: init-replica-set.sh
-              readOnly: true
       volumes:
         - name: tls-certs
           secret:
             secretName: mgo-tls
-            defaultMode: 0600
-        - name: init-script
-          configMap:
-            name: mongodb-init-scripts
   volumeClaimTemplates:
     - metadata:
         name: mgo-volume
