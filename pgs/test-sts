@@ -20,66 +20,40 @@ spec:
   selector:
     matchLabels:
       app: pgs
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
         app: pgs
     spec:
-      initContainers:
-        - name: pms
-          image: busybox
-          command: ["sh", "-c", "mkdir -p /certs/modified && cp /certs/cert.pem /certs/priv-key.pem /certs/modified/ && chmod 0640 /certs/modified/cert.pem && chmod 0600 /certs/modified/priv-key.pem"]
-          volumeMounts:
-            - name: tls-certs
-              mountPath: /certs
-              readOnly: false
       containers:
         - name: pgs
           image: docker.io/library/postgres:15-alpine
           env:
             - name: POSTGRES_USER
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   key: username
-                  name: pgs-config-map
+                  name: pgs-secret
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: password
                   name: pgs-secret
+          args: ["-c", "ssl=on", "-c", "ssl_cert_file=/opt/tls/tls.crt", "-c", "ssl_key_file=/opt/tls/tls.key"]
           ports:
             - name: postgres
               containerPort: 5432
           volumeMounts:
             - name: pgs-volume
               mountPath: /var/lib/postgresql/data
-            - name: pgs-config
-              mountPath: pg_hba.conf
-              readOnly: false
             - name: tls-certs
               mountPath: /opt/tls
-              readOnly: true
-          args:
-            - "-c"
-            - "ssl=on"
-            - "-c"
-            - "ssl_cert_file=/opt/tls/cert.pem"
-            - "-c"
-            - "ssl_key_file=/opt/tls/priv-key.pem"
       volumes:
-        - name: pgs-config
-          configMap:
-            name: pgs-config-map
-            defaultMode: 0640
-            items:
-              - key: postgresql.conf
-                path: postgresql.conf
-              - key: pg_hba.conf
-                path: pg_hba.conf
         - name: tls-certs
           secret:
-            secretName: le-tls
+            secretName: pgs-tls
+            defaultMode: 0600
   volumeClaimTemplates:
     - metadata:
         name: pgs-volume

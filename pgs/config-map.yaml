@@ -1,15 +1,32 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: pgs-config-map
+  name: postgresql-conf
 data:
   username: rapg
   password: rapg
   postgresql.conf: |
+    # PostgreSQL replication configuration
     listen_addresses = '*'
     wal_level = replica
     max_wal_senders = 5
-    wal_keep_segments = 10
-    archive_mode = off
+    wal_keep_segments = 32
+    hot_standby = on
+    # PostgreSQL tls configuration
+    "ssl" "on"
+    "ssl_ca_file" "'/opt/tls/ca.pem'"
+    "ssl_cert_file" "'/opt/tls/cert.pem'"
+    "ssl_key_file" "'/opt/tls/priv-key.pem'"
+    "ssl_ciphers" "'HIGH:MEDIUM:+3DES:!aNULL'"
+    "ssl_prefer_server_ciphers" "on"
+    "ssl_min_protocol_version" "'TLSv1.2'"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pg-hba-conf
+data:
   pg_hba.conf: |
+    # PostgreSQL replication access configuration
+    host replication rapg 192.168.86.1/24 md5
     host    all             all             0.0.0.0/0               md5
