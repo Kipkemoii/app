@@ -14,5 +14,5 @@ spec:
           groupName: acme.cert-manager.io
           solverName: dns01
           config:
-            provider: your-dns-provider
+            provider: microtik
             secretName: dns-credentials
