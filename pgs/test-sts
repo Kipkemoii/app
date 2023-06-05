@@ -9,7 +9,7 @@ spec:
     - name: postgres
       port: 5432
       targetPort: 5432
-  type: ClusterIP
+  type: LoadBalancer
 
 ---
 apiVersion: apps/v1
@@ -29,6 +29,8 @@ spec:
       containers:
         - name: pgs
           image: docker.io/library/postgres:15-alpine
+          securityContext:
+            runAsUser: 70
           env:
             - name: POSTGRES_USER
               valueFrom:
@@ -52,7 +54,7 @@ spec:
       volumes:
         - name: tls-certs
           secret:
-            secretName: pgs-tls
+            secretName: selfsigned-cert-tls
             defaultMode: 0600
   volumeClaimTemplates:
     - metadata:

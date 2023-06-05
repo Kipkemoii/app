@@ -4,6 +4,7 @@ metadata:
   name: jen-pvc
 spec:
   storageClassName: local-storage
+  volumeName: jen-pv
   accessModes: 
     - ReadWriteMany
   resources:

@@ -4,6 +4,7 @@ metadata:
   name: acd-pvc
 spec:
   storageClassName: local-storage
+  volumeName: acd-pv
   accessModes: 
     - ReadWriteMany
   resources:

@@ -44,11 +44,19 @@ spec:
               value: log-svc.yaml
             - name: LOG_HTTP_PORT
               value: '4600'
+            - name: ROLE_ID
+              value: 989c72ab-2609-0137-cb61-adee1e8a2c2a
+            - name: SECRET_ID
+              value: 711e9a20-c76b-2ca5-0379-4ed845a9521c
+            - name: AUTH_CLIENT_ID
+              value: b9b2dab9-29a2-4623-a095-801dfb0597f3
+            - name: AUTH_CLIENT_SECRET
+              value: 6rBRMBTGlMDENQrb6eo3wTC3Q31l7PWUoA5WAnmBY5xFi6gF6bJtkYZnI/s34BG3DbTmT7yqEmNm/wTfFXsy9w==
           ports:
             - name: jenga
               containerPort: 4400
           volumeMounts:
-            - name: aut-volume
+            - name: jen-volume
               mountPath: /opt/shared/data
             - name: keb-certs
               mountPath: /opt/shared/tls/keb

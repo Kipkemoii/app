@@ -4,6 +4,7 @@ metadata:
   name: rnt-pvc
 spec:
   storageClassName: local-storage
+  volumeName: rnt-pv
   accessModes: 
     - ReadWriteMany
   resources:

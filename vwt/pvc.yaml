@@ -4,6 +4,7 @@ metadata:
   name: vwt-pvc
 spec:
   storageClassName: local-storage
+  volumeName: vwt-pv
   accessModes: 
     - ReadWriteMany
   resources:

@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: test-tls
   issuerRef:
-    name: letsencrypt-cluster-issuer
+    name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
     - kberen.com

@@ -4,6 +4,7 @@ metadata:
   name: aut-pvc
 spec:
   storageClassName: local-storage
+  volumeName: aut-pv
   accessModes: 
     - ReadWriteMany
   resources:

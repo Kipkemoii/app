@@ -4,6 +4,7 @@ metadata:
   name: log-pvc
 spec:
   storageClassName: local-storage
+  volumeName: log-pv
   accessModes: 
     - ReadWriteMany
   resources:

@@ -30,7 +30,7 @@ spec:
         - name: beren-registry
       containers:
         - name: rnt
-          image: docker.io/kebeney/beren:rnt-0.0.67
+          image: docker.io/kebeney/beren:rnt-0.0.75
           env:
             - name: VLT_PROTO
               value: https
@@ -51,9 +51,13 @@ spec:
             - name: MGO_HTTP_PORT
               value: '27017'
             - name: MGO_TLSMODE
-              value: true
+              value: 'true'
             - name: TARGET_DB
               value: rnt
+            - name: ROLE_ID
+              value: 9a4d7850-7efb-8320-14a9-4123391a6d94
+            - name: SECRET_ID
+              value: d3ca3b11-545d-8b60-0f82-a2eb451eec5e
           ports:
             - name: rnt
               containerPort: 4200
@@ -62,10 +66,10 @@ spec:
               mountPath: /opt/shared/data
             - name: keb-certs
               mountPath: /opt/shared/tls/keb
-              readOnly: false
+              readOnly: true
             - name: le-certs
               mountPath: /opt/shared/tls/le
-              readOnly: false
+              readOnly: true
       volumes:
         - name: rnt-volume
           persistentVolumeClaim:
