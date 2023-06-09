@@ -30,32 +30,34 @@ spec:
         - name: beren-registry
       containers:
         - name: aut
-          image: docker.io/kebeney/beren:aut-0.0.68
+          image: docker.io/kebeney/beren:aut-0.0.77
           env:
             - name: VLT_PROTO
-              value: https
+              value: "https"
             - name: VLT_IP
               value: '192.168.86.5'
             - name: VLT_TCP_PORT
               value: '8200'
             - name: LOG_PROTO
-              value: https 
+              value: "https" 
             - name: LOG_IP
-              value: log-svc.default
+              value: "log-svc.default"
             - name: LOG_HTTP_PORT
               value: '4600'
             - name: PGS_PROTO
-              value: postgresql
+              value: "postgresql"
             - name: PGS_IP
-              value: pgs-svc.default
+              value: "postgres-svc.default"
             - name: PGS_TCP_PORT
               value: '5432'
             - name: PGS_SSLMODE
-              value: verify-ca
-            - name: PGS_DATABASE
-              value: postgres
+              value: "allow"
+            - name: ROLE_ID
+              value: "e705e4c2-1be1-0698-c028-9b54ebc948f0"
+            - name: SECRET_ID
+              value: "01d0f898-c428-4fd6-cd19-be62ad85d91f"
             - name: TARGET_DB
-              value: aut
+              value: "aut"
           ports:
             - name: aut
               containerPort: 4000

@@ -49,6 +49,12 @@ spec:
                 secretKeyRef:
                   key: password
                   name: pgs-secret
+            - name: POSTGRES_ALLOW_CONNECTIONS
+              value: "true"
+            # - name: POSTGRES_SSLMODE
+            #   value: "verify-ca"
+            # - name: POSTGRES_SSLROOTCERT
+            #   value: "/etc/ssl/ca.crt"
           ports:
             - name: postgres
               containerPort: 5432

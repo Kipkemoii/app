@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: le-tls
-type: Opaque
+type: generic
 data:
   # the data is abbreviated in this example
   cert.pem: |

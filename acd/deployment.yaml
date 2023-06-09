@@ -30,7 +30,7 @@ spec:
         - name: beren-registry
       containers:
         - name: acd
-          image: docker.io/kebeney/beren:acd-0.0.9
+          image: docker.io/kebeney/beren:acd-0.0.11
           env:
             - name: VLT_PROTO
               value: https
@@ -52,6 +52,10 @@ spec:
               value: '4000'
             - name: TARGET_DB
               value: acd
+            - ROLE_ID
+              value: 9ef7fd80-1b59-d709-6d1e-be96d705d5eb
+            - name:SECRET_ID
+              value: 21e2994d-56a7-ce99-a311-89df1620d007
           ports:
             - name: academy
               containerPort: 3000

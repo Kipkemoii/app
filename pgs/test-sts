@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: pgs
+  name: postgres-svc
 spec:
   selector:
-    app: pgs
+    app: postgres
   ports:
     - name: postgres
       port: 5432
@@ -15,22 +15,20 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: pgs
+  name: postgres
 spec:
   selector:
     matchLabels:
-      app: pgs
+      app: postgres
   replicas: 1
   template:
     metadata:
       labels:
-        app: pgs
+        app: postgres
     spec:
       containers:
         - name: pgs
           image: docker.io/library/postgres:15-alpine
-          securityContext:
-            runAsUser: 70
           env:
             - name: POSTGRES_USER
               valueFrom:
@@ -42,7 +40,9 @@ spec:
                 secretKeyRef:
                   key: password
                   name: pgs-secret
-          args: ["-c", "ssl=on", "-c", "ssl_cert_file=/opt/tls/tls.crt", "-c", "ssl_key_file=/opt/tls/tls.key"]
+            - name: POSTGRES_ALLOW_CONNECTIONS
+              value: "true"
+          # args: ["-c", "ssl=on", "-c", "ssl_cert_file=/opt/tls/tls.crt", "-c", "ssl_key_file=/opt/tls/tls.key", "-c", "ssl_ca_file=/opt/tls/ca.crt"]
           ports:
             - name: postgres
               containerPort: 5432

@@ -32,10 +32,14 @@ spec:
         - name: mps
           image: docker.io/kebeney/beren:mps-0.0.38
           env:
+            - name: NODE_ENV
+              value: development
+            - name: JWKS_CACHE_TIME
+              value: 24H
             - name: VLT_PROTO
               value: https
             - name: VLT_IP
-              value: kberen.com
+              value: '192.168.86.5'
             - name: VLT_TCP_PORT
               value: '8200'
             - name: LOG_PROTO
@@ -47,7 +51,7 @@ spec:
             - name: ROLE_ID
               value: 8f686c1d-8edd-dc19-b8e7-963c67b0ec45
             - name: SECRET_ID
-              value: 37716e5f-ec0f-082c-29fc-099451de518b
+              value: bb7d90ac-6427-e6a5-1818-6b9307f4c130
             - name: AUTH_CLIENT_ID
               value: 7bebf99f-8393-4b2f-983e-2d79c1e8dc15
             - name: AUTH_CLIENT_SECRET
