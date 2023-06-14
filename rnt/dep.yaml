@@ -26,16 +26,21 @@ spec:
       labels:
         app: rnt
     spec:
+      hostNetwork: true
       imagePullSecrets:
         - name: beren-registry
       containers:
         - name: rnt
-          image: docker.io/kebeney/beren:rnt-0.0.75
+          image: docker.io/kebeney/beren:rnt-0.0.77
           env:
+            - name: NODE_ENV
+              value: development
+            - name: JWKS_CACHE_TIME
+              value: 24H
             - name: VLT_PROTO
               value: https
             - name: VLT_IP
-              value: '192.168.86.5'
+              value: '192.168.86.4'
             - name: VLT_TCP_PORT
               value: '8200'
             - name: LOG_PROTO
@@ -47,17 +52,23 @@ spec:
             - name: MGO_PROTO
               value: mongodb
             - name: MGO_IP
-              value: mgo-svc.default
+              value: '192.168.86.203'
             - name: MGO_HTTP_PORT
               value: '27017'
             - name: MGO_TLSMODE
-              value: 'true'
+              value: 'false'
+            - name: RNT_PROTO
+              value: http
+            - name: RNT_IP
+              value: 'rnt-svc.local'
+            - name: RNT_HTTP_PORT
+              value: '4200'
             - name: TARGET_DB
               value: rnt
             - name: ROLE_ID
-              value: 9a4d7850-7efb-8320-14a9-4123391a6d94
+              value: f5b4f3a9-8cc7-50ed-a21a-31dbc70124e6
             - name: SECRET_ID
-              value: d3ca3b11-545d-8b60-0f82-a2eb451eec5e
+              value: 8d20d1bb-663d-a891-377d-11260b2b3369
           ports:
             - name: rnt
               containerPort: 4200

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vault-config
+  namespace: vault
+data:
+  vault.hcl: |
+    listener "tcp" {
+      address       = "0.0.0.0:8200"
+      tls_cert_file = "/opt/vault/tls/cert.pem"
+      tls_key_file  = "/opt/vault/tls/priv-key.pem"
+    }
+    storage "file" {
+      path = "/opt/vault/data"
+    }

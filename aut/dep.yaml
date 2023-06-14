@@ -20,22 +20,27 @@ spec:
   selector:
     matchLabels:
       app: aut
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
         app: aut
     spec:
+      hostNetwork: true
       imagePullSecrets:
-        - name: beren-registry
+        - name: beren
       containers:
         - name: aut
-          image: docker.io/kebeney/beren:aut-0.0.77
+          image: docker.io/kebeney/beren:aut-0.0.81
           env:
+            - name: NODE_ENV
+              value: development
+            - name: JWKS_CACHE_TIME
+              value: 24H
             - name: VLT_PROTO
               value: "https"
             - name: VLT_IP
-              value: '192.168.86.5'
+              value: '192.168.86.4'
             - name: VLT_TCP_PORT
               value: '8200'
             - name: LOG_PROTO
@@ -47,17 +52,23 @@ spec:
             - name: PGS_PROTO
               value: "postgresql"
             - name: PGS_IP
-              value: "postgres-svc.default"
+              value: "192.168.86.201"
             - name: PGS_TCP_PORT
               value: '5432'
             - name: PGS_SSLMODE
               value: "allow"
             - name: ROLE_ID
-              value: "e705e4c2-1be1-0698-c028-9b54ebc948f0"
+              value: e4ae5a41-0fa3-5dce-42c8-13cfa19534ea
             - name: SECRET_ID
-              value: "01d0f898-c428-4fd6-cd19-be62ad85d91f"
+              value: 2bcb17e3-83c0-22bb-beda-c215cbfcb9db
             - name: TARGET_DB
               value: "aut"
+            - name: AUT_PROTO
+              value: http
+            - name: AUT_IP
+              value: 'aut-svc.default'
+            - name: AUT_HTTP_PORT
+              value: '4000'
           ports:
             - name: aut
               containerPort: 4000

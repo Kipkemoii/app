@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mgo
+  name: mgo-svc
 spec:
   selector:
     app: mgo
@@ -9,7 +9,7 @@ spec:
     - name: mgo
       port: 27017
       targetPort: 27017
-  type: ClusterIP
+  type: LoadBalancer
 
 ---
 apiVersion: apps/v1
@@ -26,6 +26,7 @@ spec:
       labels:
         app: mgo
     spec:
+      hostNetwork: true
       containers:
         - name: mgo
           image: docker.io/library/mongo:6

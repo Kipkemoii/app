@@ -26,11 +26,12 @@ spec:
       labels:
         app: mps
     spec:
+      hostNetwork: true
       imagePullSecrets:
         - name: beren-registry
       containers:
         - name: mps
-          image: docker.io/kebeney/beren:mps-0.0.38
+          image: docker.io/kebeney/beren:mps-0.0.44
           env:
             - name: NODE_ENV
               value: development
@@ -45,13 +46,19 @@ spec:
             - name: LOG_PROTO
               value: https 
             - name: LOG_IP
-              value: log-svc.default
+              value: "log-svc.default"
             - name: LOG_HTTP_PORT
               value: '4600'
+            - name: MPS_PROTO
+              value: http
+            - name: MPS_IP
+              value: "mps-svc.default"
+            - name: MPS_HTTP_PORT
+              value: '4300'
             - name: ROLE_ID
               value: 8f686c1d-8edd-dc19-b8e7-963c67b0ec45
             - name: SECRET_ID
-              value: bb7d90ac-6427-e6a5-1818-6b9307f4c130
+              value: aa58b375-c0ee-5560-565d-477d17fbb79c
             - name: AUTH_CLIENT_ID
               value: 7bebf99f-8393-4b2f-983e-2d79c1e8dc15
             - name: AUTH_CLIENT_SECRET

@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vault-svc
+  namespace: vault
+spec:
+  selector:
+    app: vault
+  ports:
+    - name: vault
+      port: 8200
+      targetPort: 8200
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vlt
+  namespace: vault
+spec:
+  selector:
+    matchLabels:
+      app: vault
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: vault
+    spec:
+      serviceAccountName: vault-auth
+      securityContext:
+        runAsNonRoot: true
+        runAsGroup: 1000
+        runAsUser: 100
+      containers:
+        - name: vault
+          image: vault:latest
+          imagePullPolicy: Always
+          ports:
+            - name: vault
+              containerPort: 8200
+          env:
+            - name: VAULT_ADDR
+              value: 'https://127.0.0.1:8200'
+            - name: VAULT_CACERT
+              value: "/opt/vault/tls/cert.pem"
+          args:
+            - "server"
+            - "-config=/etc/vault.d/vault.hcl"
+          volumeMounts:
+            - name: vault-volume
+              mountPath: /opt/vault/data
+            - name: keb-certs
+              mountPath: /opt/vault/tls
+              readOnly: true
+            - name: vault-config
+              mountPath: /etc/vault.d/vault.hcl
+      volumes:
+        - name: keb-certs
+          secret:
+            secretName: keb-tls
+            defaultMode: 0600
+        - name: vault-config
+          configMap:
+            name: vault-config
+            items:
+              - key: vault.hcl
+                path: vault.hcl
+  volumeClaimTemplates:
+    - metadata:
+        name: vault-volume
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: managed-nfs-storage
+        resources:
+          requests:
+            storage: 2Gi

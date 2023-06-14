@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: pgs
+  name: postgres-svc
 spec:
   selector:
-    app: pgs
+    app: postgres
   ports:
     - name: postgres
       port: 5432
@@ -15,30 +15,23 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: pgs
+  name: postgres
 spec:
   selector:
     matchLabels:
-      app: pgs
+      app: postgres
   replicas: 1
   template:
     metadata:
       labels:
-        app: pgs
+        app: postgres
     spec:
-      initContainers:
-        - name: set-permissions
-          image: busybox
-          command: ["sh", "-c", "cp /opt/tls/cert.pem /opt/tls/priv-key.pem /tmp/ && chmod 0600 /tmp/priv-key.pem && chmod 0640 /tmp/cert.pem"]
-          volumeMounts:
-            - name: tls-certs
-              mountPath: /opt/tls
-            - name: temp
-              mountPath: /tmp
       containers:
-        - name: pgs
+        - name: postgres
           image: docker.io/library/postgres:15-alpine
           env:
+            - name: POSTGRES_DB
+              value: postgres
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
@@ -51,44 +44,41 @@ spec:
                   name: pgs-secret
             - name: POSTGRES_ALLOW_CONNECTIONS
               value: "true"
-            # - name: POSTGRES_SSLMODE
-            #   value: "verify-ca"
-            # - name: POSTGRES_SSLROOTCERT
-            #   value: "/etc/ssl/ca.crt"
+          args: ["-c", "ssl=on", "-c", "ssl_cert_file=/opt/tls/..data/tls.crt", "-c", "ssl_key_file=/opt/tls/..data/tls.key", "-c", "ssl_ca_file=/opt/tls/..data/ca.crt"]
           ports:
             - name: postgres
               containerPort: 5432
           volumeMounts:
             - name: pgs-volume
               mountPath: /var/lib/postgresql/data
-            # - name: pgs-config
-            #   mountPath: pg_hba.conf
-            #   readOnly: false
             - name: tls-certs
               mountPath: /opt/tls
-              readOnly: true
-          args:
-            - "-c"
-            - "ssl=on"
-            - "-c"
-            - "ssl_cert_file=/opt/tls/cert.pem"
-            - "-c"
-            - "ssl_key_file=/opt/tls/priv-key.pem"
+            - name: pgs-conf
+              mountPath: /var/lib/postgresql/data/postgresql.conf
+            - name: pgs-hba
+              mountPath: /var/lib/postgresql/data/pg_hba.conf
+      securityContext:
+        fsGroup: 70
       volumes:
-        # - name: pgs-config
-        #   configMap:
-        #     name: pgs-config-map
-        #     items:
-        #       - key: postgresql.conf
-        #         path: postgresql.conf
-        #       - key: pg_hba.conf
-        #         path: pg_hba.conf
         - name: tls-certs
           secret:
-            secretName: le-tls
-            defaultMode: 0600
-        - name: temp
-          emptyDir: {}
+            secretName: selfsigned-cert-tls
+            defaultMode: 0640
+        - name: pgs-conf
+          configMap:
+            name: pgs-conf
+            defaultMode: 0644
+            items:
+              - key: postgresql.conf
+                path: postgresql.conf
+        - name: pgs-hba
+          configMap:
+            name: pgs-hba
+            defaultMode: 0644
+            items:
+              - key: pg_hba.conf
+                path: pg_hba.conf
+          
   volumeClaimTemplates:
     - metadata:
         name: pgs-volume

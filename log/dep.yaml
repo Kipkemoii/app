@@ -26,16 +26,21 @@ spec:
       labels:
         app: log
     spec:
+      hostNetwork: true
       imagePullSecrets:
         - name: beren-registry
       containers:
         - name: log
           image: docker.io/kebeney/beren:log-0.0.7
           env:
+            - name: NODE_ENV
+              value: development
+            - name: JWKS_CACHE_TIME
+              value: 24H
             - name: VLT_PROTO
               value: https
             - name: VLT_IP
-              value: '192.168.86.5'
+              value: '192.168.86.4'
             - name: VLT_TCP_PORT
               value: '8200'
             - name: LOG_PROTO
@@ -52,6 +57,16 @@ spec:
               value: '4000'
             - name: TARGET_DB
               value: log
+            - name: ROLE_ID
+              value: d3680a85-2853-6c69-676d-372fd96aac74
+            - name: SECRET_ID
+              value: 2d5b2e8c-1ba6-6b85-141c-3a7d826959cb
+            - name: LOG_PROTO
+              value: http
+            - name: LOG_IP
+              value: 'aut-svc.default'
+            - name: LOG_HTTP_PORT
+              value: '4600'
           ports:
             - name: log
               containerPort: 4600

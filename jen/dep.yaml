@@ -20,18 +20,23 @@ spec:
   selector:
     matchLabels:
       app: jen
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
         app: jen
     spec:
+      hostNetwork: true
       imagePullSecrets:
         - name: beren-registry
       containers:
         - name: jen
           image: docker.io/kebeney/beren:jen-0.0.36
           env:
+            - name: NODE_ENV
+              value: development
+            - name: JWKS_CACHE_TIME
+              value: 24H
             - name: VLT_PROTO
               value: https
             - name: VLT_IP
@@ -44,6 +49,12 @@ spec:
               value: log-svc.yaml
             - name: LOG_HTTP_PORT
               value: '4600'
+            - name: JEN_PROTO
+              value: http
+            - name: JEN_HTTP_PORT
+              value: '4400'
+            - name: JEN_IP
+              value: 'jen-svc.default'
             - name: ROLE_ID
               value: 989c72ab-2609-0137-cb61-adee1e8a2c2a
             - name: SECRET_ID

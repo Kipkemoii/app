@@ -27,9 +27,11 @@ spec:
         app: postgres
     spec:
       containers:
-        - name: pgs
+        - name: postgres
           image: docker.io/library/postgres:15-alpine
           env:
+            - name: POSTGRES_DB
+              value: postgres
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
@@ -42,7 +44,7 @@ spec:
                   name: pgs-secret
             - name: POSTGRES_ALLOW_CONNECTIONS
               value: "true"
-          # args: ["-c", "ssl=on", "-c", "ssl_cert_file=/opt/tls/tls.crt", "-c", "ssl_key_file=/opt/tls/tls.key", "-c", "ssl_ca_file=/opt/tls/ca.crt"]
+          args: ["-c", "ssl=on", "-c", "ssl_cert_file=/opt/tls/..data/tls.crt", "-c", "ssl_key_file=/opt/tls/..data/tls.key", "-c", "ssl_ca_file=/opt/tls/..data/ca.crt"]
           ports:
             - name: postgres
               containerPort: 5432
@@ -51,11 +53,13 @@ spec:
               mountPath: /var/lib/postgresql/data
             - name: tls-certs
               mountPath: /opt/tls
+      securityContext:
+        fsGroup: 70
       volumes:
         - name: tls-certs
           secret:
             secretName: selfsigned-cert-tls
-            defaultMode: 0600
+            defaultMode: 0640
   volumeClaimTemplates:
     - metadata:
         name: pgs-volume
