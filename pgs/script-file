@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgs-conf
+data: |
+  sed -i -e "/ssl = / s/#//" -i -e "s/off/on/" /var/lib/postgresql/data/postgresql.conf;
+  sed -i -e "/ssl_ca_file/ s/#//" -i -e "/ssl_ca_file/ s/=.*/= '\/opt\/tls\/..data\/ca.crt'/" var/lib/postgresql/data/postgresql.conf;
+  sed -i -e "/ssl_cert_file/ s/#//" -i -e "/ssl_cert_file/ s/=.*/= '\/opt\/tls\/..data\/tls.crt'/" var/lib/postgresql/data/postgresql.conf;
+  sed -i -e "/ssl_key_file/ s/#//" -i -e "/ssl_key_file/ s/=.*/= '\/opt\/tls\/..data\/tls.key'/" var/lib/postgresql/data/postgresql.conf;
+  sed -i -e "/ssl_ciphers/ s/#//" var/lib/postgresql/data/postgresql.conf;
+  sed -i -e "/ssl_prefer_server_ciphers/ s/#//" var/lib/postgresql/data/postgresql.conf;
+  sed -i -e "/ssl_min_protocol_version/ s/#//" var/lib/postgresql/data/postgresql.conf;
+  sed -i -e "/scram-sha-256/ s/host/hostssl/" -i -e "/scram-sha-256/ s/scram-sha-256/password/" var/lib/postgresql/data/pg_hba.conf;
