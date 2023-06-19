@@ -26,7 +26,6 @@ spec:
       labels:
         app: jen
     spec:
-      hostNetwork: true
       imagePullSecrets:
         - name: beren-registry
       containers:
@@ -56,9 +55,9 @@ spec:
             - name: JEN_IP
               value: 'jen-svc.default'
             - name: ROLE_ID
-              value: 989c72ab-2609-0137-cb61-adee1e8a2c2a
+              value: 77a93c2c-3340-760e-112d-3ffdc616537d
             - name: SECRET_ID
-              value: 711e9a20-c76b-2ca5-0379-4ed845a9521c
+              value: fce084a6-9207-c91b-c3c3-8cca36b8171d
             - name: AUTH_CLIENT_ID
               value: b9b2dab9-29a2-4623-a095-801dfb0597f3
             - name: AUTH_CLIENT_SECRET

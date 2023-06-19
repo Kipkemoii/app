@@ -26,7 +26,6 @@ spec:
       labels:
         app: rnt
     spec:
-      hostNetwork: true
       imagePullSecrets:
         - name: beren-registry
       containers:
@@ -66,9 +65,9 @@ spec:
             - name: TARGET_DB
               value: rnt
             - name: ROLE_ID
-              value: f5b4f3a9-8cc7-50ed-a21a-31dbc70124e6
+              value: 52621c1f-3516-a92d-3630-9df457b47ba3
             - name: SECRET_ID
-              value: 8d20d1bb-663d-a891-377d-11260b2b3369
+              value: 0a2637a9-1db3-b523-0a20-6dbe49421f2d
           ports:
             - name: rnt
               containerPort: 4200

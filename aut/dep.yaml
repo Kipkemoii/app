@@ -26,7 +26,6 @@ spec:
       labels:
         app: aut
     spec:
-      hostNetwork: true
       imagePullSecrets:
         - name: beren
       containers:
@@ -40,7 +39,7 @@ spec:
             - name: VLT_PROTO
               value: "https"
             - name: VLT_IP
-              value: '192.168.86.4'
+              value: '192.168.86.205'
             - name: VLT_TCP_PORT
               value: '8200'
             - name: LOG_PROTO
@@ -58,9 +57,9 @@ spec:
             - name: PGS_SSLMODE
               value: "allow"
             - name: ROLE_ID
-              value: e4ae5a41-0fa3-5dce-42c8-13cfa19534ea
+              value: 06956ff8-66eb-e34d-8276-d91fe1b2afd6
             - name: SECRET_ID
-              value: 2bcb17e3-83c0-22bb-beda-c215cbfcb9db
+              value: b5f3a2c0-fd56-87df-c499-ef04f7548470
             - name: TARGET_DB
               value: "aut"
             - name: AUT_PROTO

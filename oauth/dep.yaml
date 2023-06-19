@@ -1,36 +1,36 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: acd-svc
+  name: oauth-svc
 spec:
   selector:
-    app: acd
+    app: oauth
   ports:
-    - name: acd
-      port: 3000
-      targetPort: 3000
+    - name: oauth
+      port: 4700
+      targetPort: 4700
   type: LoadBalancer
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: acd
+  name: oauth
 spec:
   selector:
     matchLabels:
-      app: acd
-  replicas: 2
+      app: oauth
+  replicas: 1
   template:
     metadata:
       labels:
-        app: acd
+        app: oauth
     spec:
       imagePullSecrets:
         - name: beren-registry
       containers:
-        - name: acd
-          image: docker.io/kebeney/beren:acd-0.0.11
+        - name: oauth
+          image: docker.io/kebeney/beren:oauth-0.0.11
           env:
             - name: NODE_ENV
               value: development
@@ -43,34 +43,28 @@ spec:
             - name: VLT_TCP_PORT
               value: '8200'
             - name: LOG_PROTO
-              value: https 
+              value: http
             - name: LOG_IP
               value: log-svc.default
             - name: LOG_HTTP_PORT
               value: '4600'
-            - name: AUT_PROTO
-              value: https
-            - name: AUT_IP
-              value: aut-svc.default
-            - name: AUT_HTTP_PORT
-              value: '4000'
             - name: TARGET_DB
-              value: acd
+              value: oauth
             - name: ROLE_ID
-              value: c332eb8e-7396-a8b6-1817-6eb3440cc829
+              value: 812313f3-54de-c33b-beda-97311271aabe
             - name: SECRET_ID
-              value: 014e1bb9-7372-187e-9300-415ac7c8bbbb
-            - name: ACD_PROTO
+              value: a8cddd37-2719-ac77-4920-3d9d9c0a37f6
+            - name: OAUTH_PROTO
               value: http
-            - name: ACD_IP
-              value: 'aut-svc.default'
-            - name: ACD_HTTP_PORT
-              value: '3000'
+            - name: OAUTH_IP
+              value: 'oauth-svc.default'
+            - name: OAUTH_HTTP_PORT
+              value: '4700'
           ports:
-            - name: academy
-              containerPort: 3000
+            - name: oauth
+              containerPort: 4700
           volumeMounts:
-            - name: acd-volume
+            - name: oauth-volume
               mountPath: /opt/shared/data
             - name: keb-certs
               mountPath: /opt/shared/tls/keb
@@ -79,7 +73,7 @@ spec:
               mountPath: /opt/shared/tls/le
               readOnly: false
       volumes:
-        - name: acd-volume
+        - name: oauth-volume
           persistentVolumeClaim:
             claimName: acd-pvc
         - name: le-certs

@@ -26,7 +26,6 @@ spec:
       labels:
         app: log
     spec:
-      hostNetwork: true
       imagePullSecrets:
         - name: beren-registry
       containers:
@@ -58,9 +57,9 @@ spec:
             - name: TARGET_DB
               value: log
             - name: ROLE_ID
-              value: d3680a85-2853-6c69-676d-372fd96aac74
+              value: e32c5762-7107-4e90-6f41-93f55e5102e0
             - name: SECRET_ID
-              value: 2d5b2e8c-1ba6-6b85-141c-3a7d826959cb
+              value: d9d14531-dc1c-b5a1-6a5d-357b37c0aeed
             - name: LOG_PROTO
               value: http
             - name: LOG_IP

@@ -26,7 +26,6 @@ spec:
       labels:
         app: vwt
     spec:
-      hostNetwork: true
       imagePullSecrets:
         - name: beren-registry
       containers:
@@ -70,9 +69,9 @@ spec:
             - name: TARGET_DB
               value: vwt
             - name: ROLE_ID
-              value: b91d8280-5b3b-28a1-eac1-75f3230ddf26
+              value: a7e3fc89-6fb7-7948-0e15-776d95d35f06
             - name: SECRET_ID
-              value: 35e9bf30-3ce2-a352-9d69-ce23e1f94e59
+              value: eeb64ece-2477-5074-a24f-dfa88522909c
             - name: VWT_PROTO
               value: http
             - name: VWT_IP

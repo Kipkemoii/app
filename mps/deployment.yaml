@@ -26,7 +26,6 @@ spec:
       labels:
         app: mps
     spec:
-      hostNetwork: true
       imagePullSecrets:
         - name: beren-registry
       containers:
@@ -40,7 +39,7 @@ spec:
             - name: VLT_PROTO
               value: https
             - name: VLT_IP
-              value: '192.168.86.5'
+              value: '192.168.86.205'
             - name: VLT_TCP_PORT
               value: '8200'
             - name: LOG_PROTO
@@ -56,9 +55,9 @@ spec:
             - name: MPS_HTTP_PORT
               value: '4300'
             - name: ROLE_ID
-              value: 8f686c1d-8edd-dc19-b8e7-963c67b0ec45
+              value: f1363a71-56bc-b17a-ce5b-fbf70531f520
             - name: SECRET_ID
-              value: aa58b375-c0ee-5560-565d-477d17fbb79c
+              value: da65cd40-68d5-666f-f1af-5bb715540fa47
             - name: AUTH_CLIENT_ID
               value: 7bebf99f-8393-4b2f-983e-2d79c1e8dc15
             - name: AUTH_CLIENT_SECRET

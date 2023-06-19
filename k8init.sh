@@ -8,10 +8,14 @@ sudo dnf -y install runc
 
 #Disabling swap
 swapoff -a
-sed -e '/swap/s/^/#/g' -i /etc/fstab
+sed -i -e '/swap/ s/^/#/g' /etc/fstab
 
 #Adding master node ports
 sudo firewall-cmd --permanent --add-port={6443,2379,2380,10248-10260,6783,6784}/tcp
+sudo firewall-cmd --reload
+
+#Adding worker nodes ports
+sudo firewall-cmd --permanent --add-port={10250,30000-32767}/tcp
 sudo firewall-cmd --reload
 
 #Network prerequisites

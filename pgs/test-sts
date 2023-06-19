@@ -30,6 +30,14 @@ spec:
         - name: postgres
           image: docker.io/library/postgres:15-alpine
           env:
+            - name: POSTGRES_HOST_SSL_CERT
+              value: /opt/tls/..data/tls.crt
+            - name: POSTGRES_HOST_SSL_KEY
+              value: /opt/tls/..data/tls.key
+            - name: POSTGRES_HOST_SSL_CA
+              value: /opt/tls/..data/ca.crt
+            - name: POSTGRES_HOST_SSL_MODE
+              value: verify-ca
             - name: POSTGRES_DB
               value: postgres
             - name: POSTGRES_USER
@@ -44,7 +52,6 @@ spec:
                   name: pgs-secret
             - name: POSTGRES_ALLOW_CONNECTIONS
               value: "true"
-          args: ["-c", "ssl=on", "-c", "ssl_cert_file=/opt/tls/..data/tls.crt", "-c", "ssl_key_file=/opt/tls/..data/tls.key", "-c", "ssl_ca_file=/opt/tls/..data/ca.crt"]
           ports:
             - name: postgres
               containerPort: 5432
