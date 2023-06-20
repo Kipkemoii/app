@@ -27,10 +27,10 @@ spec:
         app: log
     spec:
       imagePullSecrets:
-        - name: beren-registry
+        - name: beren
       containers:
         - name: log
-          image: docker.io/kebeney/beren:log-0.0.7
+          image: docker.io/kebeney/beren:log-0.0.11
           env:
             - name: NODE_ENV
               value: development
@@ -39,27 +39,29 @@ spec:
             - name: VLT_PROTO
               value: https
             - name: VLT_IP
-              value: '192.168.86.4'
+              value: '192.168.86.204'
             - name: VLT_TCP_PORT
               value: '8200'
-            - name: LOG_PROTO
-              value: https 
-            - name: LOG_IP
-              value: kberen.com
-            - name: LOG_HTTP_PORT
-              value: '4600'
-            - name: AUT_PROTO
-              value: https
-            - name: AUT_IP
-              value: aut-svc.default
-            - name: AUT_HTTP_PORT
-              value: '4000'
+            - name: OAUTH_PROTO
+              value: http
+            - name: OAUTH_IP
+              value: 'oauth-svc.default.svc.cluster.local'
+            - name: OAUTH_HTTP_PORT
+              value: '4700'
             - name: TARGET_DB
               value: log
+            - name: PGS_PROTO
+              value: "postgresql"
+            - name: PGS_IP
+              value: "pgs-svc.default.svc.cluster.local"
+            - name: PGS_TCP_PORT
+              value: '5432'
+            - name: PGS_SSLMODE
+              value: "allow"
             - name: ROLE_ID
-              value: e32c5762-7107-4e90-6f41-93f55e5102e0
+              value: 9648e57f-e809-bc06-337e-181c2d84f7c3
             - name: SECRET_ID
-              value: d9d14531-dc1c-b5a1-6a5d-357b37c0aeed
+              value: 32b954a5-b396-3523-19bc-0074b4deaea1
             - name: LOG_PROTO
               value: http
             - name: LOG_IP

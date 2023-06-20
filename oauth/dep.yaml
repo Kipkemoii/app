@@ -39,7 +39,7 @@ spec:
             - name: VLT_PROTO
               value: https
             - name: VLT_IP
-              value: '192.168.86.205'
+              value: '192.168.86.204'
             - name: VLT_TCP_PORT
               value: '8200'
             - name: LOG_PROTO
@@ -50,10 +50,18 @@ spec:
               value: '4600'
             - name: TARGET_DB
               value: oauth
+            - name: PGS_PROTO
+              value: "postgresql"
+            - name: PGS_IP
+              value: "192.168.86.201"
+            - name: PGS_TCP_PORT
+              value: '5432'
+            - name: PGS_SSLMODE
+              value: "allow"
             - name: ROLE_ID
-              value: 812313f3-54de-c33b-beda-97311271aabe
+              value: ac37e86c-5f95-8f99-5ead-9b6846a3a51e
             - name: SECRET_ID
-              value: a8cddd37-2719-ac77-4920-3d9d9c0a37f6
+              value: 94f61d75-9ad8-4cbe-60fd-b7a87f8ba6ee
             - name: OAUTH_PROTO
               value: http
             - name: OAUTH_IP
@@ -75,7 +83,7 @@ spec:
       volumes:
         - name: oauth-volume
           persistentVolumeClaim:
-            claimName: acd-pvc
+            claimName: oauth-pvc
         - name: le-certs
           secret:
             secretName: le-tls

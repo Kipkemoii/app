@@ -41,14 +41,14 @@ spec:
                 secretKeyRef:
                   key: password
                   name: mgo-secret
-          args: ["--tlsMode=requireTLS", "--tlsCertificateKeyFile=/opt/tls/cert.pem"]
+          args: ["--tlsMode=requireTLS", "--tlsCertificateKeyFile=/opt/tls/cert-with-key.pem"]
           ports:
             - name: mgo
               containerPort: 27017
           volumeMounts:
             - name: mgo-volume
               mountPath: /data/db
-            - name: tls-certs
+            - name: keb-certs
               mountPath: /opt/tls
       volumes:
         - name: tls-certs

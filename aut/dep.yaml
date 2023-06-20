@@ -39,7 +39,7 @@ spec:
             - name: VLT_PROTO
               value: "https"
             - name: VLT_IP
-              value: '192.168.86.205'
+              value: '192.168.86.204'
             - name: VLT_TCP_PORT
               value: '8200'
             - name: LOG_PROTO
@@ -57,9 +57,9 @@ spec:
             - name: PGS_SSLMODE
               value: "allow"
             - name: ROLE_ID
-              value: 06956ff8-66eb-e34d-8276-d91fe1b2afd6
+              value: 32b92e59-ba00-d394-26e1-b466cd91b1c3
             - name: SECRET_ID
-              value: b5f3a2c0-fd56-87df-c499-ef04f7548470
+              value: 7ca64168-3c03-4e74-6843-7dd9dcdc4e32
             - name: TARGET_DB
               value: "aut"
             - name: AUT_PROTO
@@ -77,6 +77,9 @@ spec:
             - name: keb-certs
               mountPath: /opt/shared/tls/keb
               readOnly: false
+            - name: opt-certs
+              mountPath: /opt/tls/keb
+              readOnly: false
             - name: le-certs
               mountPath: /opt/shared/tls/le
               readOnly: false
@@ -89,6 +92,10 @@ spec:
             secretName: le-tls
             defaultMode: 0600
         - name: keb-certs
+          secret:
+            secretName: keb-tls
+            defaultMode: 0600
+        - name: opt-certs
           secret:
             secretName: keb-tls
             defaultMode: 0600

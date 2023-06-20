@@ -39,7 +39,7 @@ spec:
             - name: VLT_PROTO
               value: https
             - name: VLT_IP
-              value: '192.168.86.205'
+              value: '192.168.86.204'
             - name: VLT_TCP_PORT
               value: '8200'
             - name: LOG_PROTO
@@ -55,9 +55,9 @@ spec:
             - name: MPS_HTTP_PORT
               value: '4300'
             - name: ROLE_ID
-              value: f1363a71-56bc-b17a-ce5b-fbf70531f520
+              value: d0b0f6a7-87af-1df3-78a3-ec393fd6e1df
             - name: SECRET_ID
-              value: da65cd40-68d5-666f-f1af-5bb715540fa47
+              value: 13224e7f-a1c1-a8b4-bee3-4d850fd28b7f
             - name: AUTH_CLIENT_ID
               value: 7bebf99f-8393-4b2f-983e-2d79c1e8dc15
             - name: AUTH_CLIENT_SECRET

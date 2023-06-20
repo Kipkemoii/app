@@ -39,7 +39,7 @@ spec:
             - name: VLT_PROTO
               value: https
             - name: VLT_IP
-              value: '192.168.86.4'
+              value: '192.168.86.204'
             - name: VLT_TCP_PORT
               value: '8200'
             - name: LOG_PROTO
@@ -51,7 +51,7 @@ spec:
             - name: MGO_PROTO
               value: mongodb
             - name: MGO_IP
-              value: '192.168.86.203'
+              value: '192.168.86.200'
             - name: MGO_HTTP_PORT
               value: '27017'
             - name: MGO_TLSMODE
@@ -65,9 +65,9 @@ spec:
             - name: TARGET_DB
               value: rnt
             - name: ROLE_ID
-              value: 52621c1f-3516-a92d-3630-9df457b47ba3
+              value: dba16513-c3e0-b3ae-ac7a-27d5d5767353
             - name: SECRET_ID
-              value: 0a2637a9-1db3-b523-0a20-6dbe49421f2d
+              value: 543ea013-7f8f-290b-71e5-8452030f3d6f
           ports:
             - name: rnt
               containerPort: 4200

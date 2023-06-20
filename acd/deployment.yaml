@@ -27,10 +27,10 @@ spec:
         app: acd
     spec:
       imagePullSecrets:
-        - name: beren-registry
+        - name: beren
       containers:
         - name: acd
-          image: docker.io/kebeney/beren:acd-0.0.11
+          image: docker.io/kebeney/beren:acd-0.0.12
           env:
             - name: NODE_ENV
               value: development
@@ -39,7 +39,7 @@ spec:
             - name: VLT_PROTO
               value: https
             - name: VLT_IP
-              value: '192.168.86.205'
+              value: '192.168.86.204'
             - name: VLT_TCP_PORT
               value: '8200'
             - name: LOG_PROTO
@@ -48,22 +48,32 @@ spec:
               value: log-svc.default
             - name: LOG_HTTP_PORT
               value: '4600'
-            - name: AUT_PROTO
-              value: https
-            - name: AUT_IP
-              value: aut-svc.default
-            - name: AUT_HTTP_PORT
-              value: '4000'
+            - name: OAUTH_PROTO
+              value: http
+            - name: OAUTH_IP
+              value: 'oauth-svc.default.svc.cluster.local'
+            - name: OAUTH_HTTP_PORT
+              value: '4700'
+            - name: PGS_PROTO
+              value: "postgresql"
+            - name: PGS_IP
+              value: 'psg-svc.default.svc.cluster.local'
+            - name: PGS_TCP_PORT
+              value: '5432'
+            - name: PGS_SSLMODE
+              value: "allow"
+            - name: COOKIE_MAX_AGE_HRS
+              value: '24'
             - name: TARGET_DB
               value: acd
             - name: ROLE_ID
-              value: c332eb8e-7396-a8b6-1817-6eb3440cc829
+              value: 263246b9-1ec5-29ac-9055-495a81dc811b
             - name: SECRET_ID
-              value: 014e1bb9-7372-187e-9300-415ac7c8bbbb
+              value: 91d61a22-c469-28bc-6316-07485400b51a
             - name: ACD_PROTO
               value: http
             - name: ACD_IP
-              value: 'aut-svc.default'
+              value: 'acd-svc.default'
             - name: ACD_HTTP_PORT
               value: '3000'
           ports:
