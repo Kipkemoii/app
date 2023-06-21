@@ -7,17 +7,17 @@ metadata:
 spec:
   # ingressClassName: nginx
   tls:
-  - hosts:
-    - vwt.kberen.com
-    secretName: le-tls
+    - hosts:
+        - vwt.kberen.com
+      secretName: le-tls
   rules:
   - host: vwt.kberen.com
     http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service: 
-            name: vwt-svc
-            port: 
-              number: 4500
+        - path: /
+          pathType: Prefix
+          backend:
+            service: 
+              name: vwt-svc
+              port: 
+                number: 4500

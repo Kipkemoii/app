@@ -65,6 +65,12 @@ spec:
           ports:
             - name: jenga
               containerPort: 4400
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+              memory: 512Mi
           volumeMounts:
             - name: jen-volume
               mountPath: /opt/shared/data

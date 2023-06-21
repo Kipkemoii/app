@@ -1,0 +1,38 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: rnt-hpa
+spec:
+  behavior:
+  scaleDown:
+    stabilizationWindowSeconds: 300
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: rnt
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+  - type: Resource
+    resource:
+      name: memory
+      target: 
+        type: AverageValue
+        averageValue: 100Mi
+  - type: Object
+    object:
+      metric:
+        name: requests-per-second
+      describedObject:
+        apiVersion: networking.k8s.io/v1
+        kind: Ingress
+        name: rnt-ingress
+      target:
+        type: Value
+        value: 100

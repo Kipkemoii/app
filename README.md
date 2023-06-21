@@ -1,2 +1,2 @@
-# kuberenetes
+# kubernetes
 kubernetes yaml files

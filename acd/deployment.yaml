@@ -79,6 +79,12 @@ spec:
           ports:
             - name: academy
               containerPort: 3000
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+              memory: 512Mi
           volumeMounts:
             - name: acd-volume
               mountPath: /opt/shared/data

@@ -71,6 +71,12 @@ spec:
           ports:
             - name: log
               containerPort: 4600
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+              memory: 512Mi
           volumeMounts:
             - name: log-volume
               mountPath: /opt/shared/data

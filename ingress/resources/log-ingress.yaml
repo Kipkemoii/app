@@ -7,17 +7,17 @@ metadata:
 spec:
   # ingressClassName: nginx
   tls:
-  - hosts:
-    - log.kberen.com
-    secretName: le-tls
+    - hosts:
+        - log.kberen.com
+      secretName: le-tls
   rules:
   - host: log.kberen.com
     http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service: 
-            name: log-svc
-            port: 
-              number: 4600
+        - path: /
+          pathType: Prefix
+          backend:
+            service: 
+              name: log-svc
+              port: 
+                number: 4600

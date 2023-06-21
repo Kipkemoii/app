@@ -44,6 +44,12 @@ spec:
           ports:
             - name: mgo
               containerPort: 27017
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+              memory: 512Mi
           volumeMounts:
             - name: mgo-volume
               mountPath: /data/db

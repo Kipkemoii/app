@@ -71,6 +71,12 @@ spec:
           ports:
             - name: rnt
               containerPort: 4200
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+              memory: 512Mi
           volumeMounts:
             - name: rnt-volume
               mountPath: /opt/shared/data

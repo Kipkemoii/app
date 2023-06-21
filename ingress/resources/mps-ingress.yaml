@@ -7,17 +7,17 @@ metadata:
 spec:
   # ingressClassName: nginx
   tls:
-  - hosts:
-    - mps.kberen.com
-    secretName: le-tls
+    - hosts:
+        - mps.kberen.com
+      secretName: le-tls
   rules:
   - host: mps.kberen.com
     http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service: 
-            name: mps-svc
-            port: 
-              number: 4300
+        - path: /
+          pathType: Prefix
+          backend:
+            service: 
+              name: mps-svc
+              port: 
+                number: 4300
