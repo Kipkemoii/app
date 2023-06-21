@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  name: jen-ingress
+spec:
+  # ingressClassName: nginx
+  tls:
+  - hosts:
+    - jen.kberen.com
+    secretName: le-tls
+  rules:
+  - host: jen.kberen.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service: 
+            name: jen-svc
+            port: 
+              number: 4400

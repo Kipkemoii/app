@@ -26,7 +26,6 @@ spec:
       labels:
         app: mgo
     spec:
-      hostNetwork: true
       containers:
         - name: mgo
           image: docker.io/library/mongo:6

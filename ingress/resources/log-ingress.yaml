@@ -3,21 +3,21 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
-  name: example-app
+  name: log-ingress
 spec:
-  ingressClassName: nginx
+  # ingressClassName: nginx
   tls:
   - hosts:
-    - marcel.guru
-    secretName: example-app-tls
+    - log.kberen.com
+    secretName: le-tls
   rules:
-  - host: marcel.guru
+  - host: log.kberen.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service: 
-            name: example-service
+            name: log-svc
             port: 
-              number: 80
+              number: 4600

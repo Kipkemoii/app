@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  name: mps-ingress
+spec:
+  # ingressClassName: nginx
+  tls:
+  - hosts:
+    - mps.kberen.com
+    secretName: le-tls
+  rules:
+  - host: mps.kberen.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service: 
+            name: mps-svc
+            port: 
+              number: 4300
