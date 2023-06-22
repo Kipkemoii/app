@@ -2,14 +2,14 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    kubernetes.io/ingress.class: "nginx"
+    # kubernetes.io/ingress.class: "nginx"
   name: aut-ingress
 spec:
-  # ingressClassName: nginx
+  ingressClassName: nginx
   tls:
     - hosts:
-        - aut.kberen.com
-      secretName: le-tls
+        - aut.mabs.com
+      secretName: mabs-tls
   rules:
     - host: aut.kberen.com
       http:

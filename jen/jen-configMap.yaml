@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jen-configmap
+data:
+  NODE_ENV: development
+  JWKS_CACHE_TIME: 24H
+  VLT_PROTO: https
+  VLT_IP: '192.168.86.204'
+  VLT_TCP_PORT: '8200'
+  LOG_PROTO: http
+  LOG_IP: log-svc.default.svc.cluster.local
+  LOG_HTTP_PORT: '4600'
+  JEN_PROTO: http
+  JEN_HTTP_PORT: '4400'
+  JEN_IP: jen-svc.default.svc.cluster.local
+  ROLE_ID: aa3a78f2-a50b-d722-9fe7-295b17694bad
+  SECRET_ID: f347632a-b53d-22eb-1164-9ad8cb061084
+

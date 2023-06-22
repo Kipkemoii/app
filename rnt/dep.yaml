@@ -30,44 +30,10 @@ spec:
         - name: beren-registry
       containers:
         - name: rnt
-          image: docker.io/kebeney/beren:rnt-0.0.77
-          env:
-            - name: NODE_ENV
-              value: development
-            - name: JWKS_CACHE_TIME
-              value: 24H
-            - name: VLT_PROTO
-              value: https
-            - name: VLT_IP
-              value: '192.168.86.204'
-            - name: VLT_TCP_PORT
-              value: '8200'
-            - name: LOG_PROTO
-              value: https 
-            - name: LOG_IP
-              value: log-svc.default
-            - name: LOG_HTTP_PORT
-              value: '4600'
-            - name: MGO_PROTO
-              value: mongodb
-            - name: MGO_IP
-              value: '192.168.86.200'
-            - name: MGO_HTTP_PORT
-              value: '27017'
-            - name: MGO_TLSMODE
-              value: 'false'
-            - name: RNT_PROTO
-              value: http
-            - name: RNT_IP
-              value: 'rnt-svc.local'
-            - name: RNT_HTTP_PORT
-              value: '4200'
-            - name: TARGET_DB
-              value: rnt
-            - name: ROLE_ID
-              value: dba16513-c3e0-b3ae-ac7a-27d5d5767353
-            - name: SECRET_ID
-              value: 543ea013-7f8f-290b-71e5-8452030f3d6f
+          image: docker.io/kebeney/beren:rnt-0.0.82
+          envFrom:
+            - configMapRef:
+                name: rnt-configmap
           ports:
             - name: rnt
               containerPort: 4200

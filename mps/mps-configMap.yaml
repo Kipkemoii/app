@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mps-configmap
+data:
+  NODE_ENV: development
+  JWKS_CACHE_TIME: 24H
+  VLT_PROTO: https
+  VLT_IP: '192.168.86.204'
+  VLT_TCP_PORT: '8200'
+  LOG_PROTO: http
+  LOG_IP: log-svc.default.svc.cluster.local
+  LOG_HTTP_PORT: '4600'
+  MPS_PROTO: http
+  MPS_IP: mps-svc.default.svc.cluster.local
+  MPS_HTTP_PORT: '4300'
+  ROLE_ID: d0b0f6a7-87af-1df3-78a3-ec393fd6e1df
+  SECRET_ID: 13224e7f-a1c1-a8b4-bee3-4d850fd28b7f

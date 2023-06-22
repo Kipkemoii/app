@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rnt-configmap
+data:
+  NODE_ENV: development
+  JWKS_CACHE_TIME: 24H
+  VLT_PROTO: https
+  VLT_IP: '192.168.86.204'
+  VLT_TCP_PORT: '8200'
+  LOG_PROTO: http
+  LOG_IP: log-svc.default.svc.cluster.local
+  LOG_HTTP_PORT: '4600'
+  MGO_PROTO: mongodb
+  MGO_IP: '192.168.86.200'
+  MGO_HTTP_PORT: '27017'
+  MGO_TLSMODE: 'true'
+  RNT_PROTO: http
+  RNT_IP: 'rnt-svc.default.svc.cluster.local'
+  RNT_HTTP_PORT: '4200'
+  TARGET_DB: rnt
+  ROLE_ID: dba16513-c3e0-b3ae-ac7a-27d5d5767353
+  SECRET_ID: 543ea013-7f8f-290b-71e5-8452030f3d6f
+
+

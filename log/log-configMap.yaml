@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: log-configmap
+data:
+  NODE_ENV: development
+  JWKS_CACHE_TIME: 24H
+  VLT_PROTO: https
+  VLT_IP: '192.168.86.204'
+  VLT_TCP_PORT: '8200'
+  LOG_PROTO: http
+  LOG_IP: log-svc.default.svc.cluster.local
+  LOG_HTTP_PORT: '4600'
+  OAUTH_PROTO: http
+  OAUTH_IP: oauth-svc.default.svc.cluster.local
+  OAUTH_HTTP_PORT: '4700'
+  TARGET_DB: log
+  PGS_PROTO: postgresql
+  PGS_IP: pgs-svc.default.svc.cluster.local
+  PGS_TCP_PORT: '5432'
+  PGS_SSLMODE: allow
+  ROLE_ID: 9648e57f-e809-bc06-337e-181c2d84f7c3
+  SECRET_ID: 32b954a5-b396-3523-19bc-0074b4deaea1
+
+

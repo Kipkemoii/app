@@ -31,61 +31,9 @@ spec:
       containers:
         - name: vwt
           image: docker.io/kebeney/beren:vwt-0.0.55
-          env:
-            - name: NODE_ENV
-              value: development
-            - name: JWKS_CACHE_TIME
-              value: 24H
-            - name: VLT_PROTO
-              value: https
-            - name: VLT_IP
-              value: '192.168.86.204'
-            - name: VLT_TCP_PORT
-              value: '8200'
-            - name: LOG_PROTO
-              value: https 
-            - name: LOG_IP
-              value: log-svc.yaml
-            - name: LOG_HTTP_PORT
-              value: '4600'
-            - name: OAUTH_PROTO
-              value: http
-            - name: OAUTH_IP
-              value: 'oauth-svc.default.svc.cluster.local'
-            - name: OAUTH_HTTP_PORT
-              value: '4700'
-            - name: JEN_PROTO
-              value: https
-            - name: JEN_IP
-              value: 'jen-svc-default.svc.cluster.local'
-            - name: JEN_HTTP_PORT
-              value: '4400'
-            - name: MPS_PROTO
-              value: https
-            - name: MPS_IP
-              value: 'mps-svc.default.svc.cluster.local'
-            - name: MPS_HTTP_PORT
-              value: '4300'
-            - name: TARGET_DB
-              value: vwt
-            - name: PGS_PROTO
-              value: "postgresql"
-            - name: PGS_IP
-              value: 'pgs-svc.default.svc.cluster.local'
-            - name: PGS_TCP_PORT
-              value: '5432'
-            - name: PGS_SSLMODE
-              value: "allow"
-            - name: ROLE_ID
-              value: 6ac509a4-e136-fdcb-f246-71f9115d8b1a
-            - name: SECRET_ID
-              value: bc281ba6-35cc-9a56-4eab-06a0ac1c798b
-            - name: VWT_PROTO
-              value: http
-            - name: VWT_IP
-              value: 'aut-svc.default'
-            - name: VWT_HTTP_PORT
-              value: '4500'
+          envFrom:
+            - configMapRef:
+                name: vwt-configmap
           ports:
             - name: vwt
               containerPort: 4500

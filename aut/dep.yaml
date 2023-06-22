@@ -31,43 +31,9 @@ spec:
       containers:
         - name: aut
           image: docker.io/kebeney/beren:aut-0.0.81
-          env:
-            - name: NODE_ENV
-              value: development
-            - name: JWKS_CACHE_TIME
-              value: 24H
-            - name: VLT_PROTO
-              value: "https"
-            - name: VLT_IP
-              value: '192.168.86.204'
-            - name: VLT_TCP_PORT
-              value: '8200'
-            - name: LOG_PROTO
-              value: "https" 
-            - name: LOG_IP
-              value: "log-svc.default"
-            - name: LOG_HTTP_PORT
-              value: '4600'
-            - name: PGS_PROTO
-              value: "postgresql"
-            - name: PGS_IP
-              value: "192.168.86.201"
-            - name: PGS_TCP_PORT
-              value: '5432'
-            - name: PGS_SSLMODE
-              value: "allow"
-            - name: ROLE_ID
-              value: 32b92e59-ba00-d394-26e1-b466cd91b1c3
-            - name: SECRET_ID
-              value: 7ca64168-3c03-4e74-6843-7dd9dcdc4e32
-            - name: TARGET_DB
-              value: "aut"
-            - name: AUT_PROTO
-              value: http
-            - name: AUT_IP
-              value: 'aut-svc.default'
-            - name: AUT_HTTP_PORT
-              value: '4000'
+          envFrom:
+            - configMapRef:
+                name: aut-configmap
           ports:
             - name: aut
               containerPort: 4000

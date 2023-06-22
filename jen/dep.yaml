@@ -31,37 +31,9 @@ spec:
       containers:
         - name: jen
           image: docker.io/kebeney/beren:jen-0.0.36
-          env:
-            - name: NODE_ENV
-              value: development
-            - name: JWKS_CACHE_TIME
-              value: 24H
-            - name: VLT_PROTO
-              value: https
-            - name: VLT_IP
-              value: '192.168.86.204'
-            - name: VLT_TCP_PORT
-              value: '8200'
-            - name: LOG_PROTO
-              value: https 
-            - name: LOG_IP
-              value: log-svc.yaml
-            - name: LOG_HTTP_PORT
-              value: '4600'
-            - name: JEN_PROTO
-              value: http
-            - name: JEN_HTTP_PORT
-              value: '4400'
-            - name: JEN_IP
-              value: 'jen-svc.default'
-            - name: ROLE_ID
-              value: aa3a78f2-a50b-d722-9fe7-295b17694bad
-            - name: SECRET_ID
-              value: f347632a-b53d-22eb-1164-9ad8cb061084
-            - name: AUTH_CLIENT_ID
-              value: b9b2dab9-29a2-4623-a095-801dfb0597f3
-            - name: AUTH_CLIENT_SECRET
-              value: 6rBRMBTGlMDENQrb6eo3wTC3Q31l7PWUoA5WAnmBY5xFi6gF6bJtkYZnI/s34BG3DbTmT7yqEmNm/wTfFXsy9w==
+          envFrom:
+            - configMapRef:
+                name: jen-configmap
           ports:
             - name: jenga
               containerPort: 4400

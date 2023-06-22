@@ -31,37 +31,9 @@ spec:
       containers:
         - name: mps
           image: docker.io/kebeney/beren:mps-0.0.44
-          env:
-            - name: NODE_ENV
-              value: development
-            - name: JWKS_CACHE_TIME
-              value: 24H
-            - name: VLT_PROTO
-              value: https
-            - name: VLT_IP
-              value: '192.168.86.204'
-            - name: VLT_TCP_PORT
-              value: '8200'
-            - name: LOG_PROTO
-              value: https 
-            - name: LOG_IP
-              value: "log-svc.default"
-            - name: LOG_HTTP_PORT
-              value: '4600'
-            - name: MPS_PROTO
-              value: http
-            - name: MPS_IP
-              value: "mps-svc.default"
-            - name: MPS_HTTP_PORT
-              value: '4300'
-            - name: ROLE_ID
-              value: d0b0f6a7-87af-1df3-78a3-ec393fd6e1df
-            - name: SECRET_ID
-              value: 13224e7f-a1c1-a8b4-bee3-4d850fd28b7f
-            - name: AUTH_CLIENT_ID
-              value: 7bebf99f-8393-4b2f-983e-2d79c1e8dc15
-            - name: AUTH_CLIENT_SECRET
-              value: taSbrEd7VQTS0IMPMAzoOAkP5HeOUibS4h5R7k9v6gbuRYXHrTy89pajzBLZ+/5Uv1oi8tXFevFusLHWlxmHMQ==
+          envFrom:
+            - configMapRef:
+                name: mps-configmap
           ports:
             - name: mps
               containerPort: 4300

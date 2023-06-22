@@ -31,43 +31,9 @@ spec:
       containers:
         - name: log
           image: docker.io/kebeney/beren:log-0.0.11
-          env:
-            - name: NODE_ENV
-              value: development
-            - name: JWKS_CACHE_TIME
-              value: 24H
-            - name: VLT_PROTO
-              value: https
-            - name: VLT_IP
-              value: '192.168.86.204'
-            - name: VLT_TCP_PORT
-              value: '8200'
-            - name: OAUTH_PROTO
-              value: http
-            - name: OAUTH_IP
-              value: 'oauth-svc.default.svc.cluster.local'
-            - name: OAUTH_HTTP_PORT
-              value: '4700'
-            - name: TARGET_DB
-              value: log
-            - name: PGS_PROTO
-              value: "postgresql"
-            - name: PGS_IP
-              value: "pgs-svc.default.svc.cluster.local"
-            - name: PGS_TCP_PORT
-              value: '5432'
-            - name: PGS_SSLMODE
-              value: "allow"
-            - name: ROLE_ID
-              value: 9648e57f-e809-bc06-337e-181c2d84f7c3
-            - name: SECRET_ID
-              value: 32b954a5-b396-3523-19bc-0074b4deaea1
-            - name: LOG_PROTO
-              value: http
-            - name: LOG_IP
-              value: 'aut-svc.default'
-            - name: LOG_HTTP_PORT
-              value: '4600'
+          envFrom:
+            - configMapRef:
+                name: log-configmap
           ports:
             - name: log
               containerPort: 4600
