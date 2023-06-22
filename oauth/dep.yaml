@@ -31,43 +31,9 @@ spec:
       containers:
         - name: oauth
           image: docker.io/kebeney/beren:oauth-0.0.11
-          env:
-            - name: NODE_ENV
-              value: development
-            - name: JWKS_CACHE_TIME
-              value: 24H
-            - name: VLT_PROTO
-              value: https
-            - name: VLT_IP
-              value: '192.168.86.204'
-            - name: VLT_TCP_PORT
-              value: '8200'
-            - name: LOG_PROTO
-              value: http
-            - name: LOG_IP
-              value: log-svc.default
-            - name: LOG_HTTP_PORT
-              value: '4600'
-            - name: TARGET_DB
-              value: oauth
-            - name: PGS_PROTO
-              value: "postgresql"
-            - name: PGS_IP
-              value: "192.168.86.201"
-            - name: PGS_TCP_PORT
-              value: '5432'
-            - name: PGS_SSLMODE
-              value: "allow"
-            - name: ROLE_ID
-              value: ac37e86c-5f95-8f99-5ead-9b6846a3a51e
-            - name: SECRET_ID
-              value: 94f61d75-9ad8-4cbe-60fd-b7a87f8ba6ee
-            - name: OAUTH_PROTO
-              value: http
-            - name: OAUTH_IP
-              value: 'oauth-svc.default'
-            - name: OAUTH_HTTP_PORT
-              value: '4700'
+          envFrom:
+            - configMapRef:
+                name: oauth-configmap
           ports:
             - name: oauth
               containerPort: 4700
