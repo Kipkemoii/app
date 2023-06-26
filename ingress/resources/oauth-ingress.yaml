@@ -8,10 +8,10 @@ spec:
   # ingressClassName: nginx
   tls:
     - hosts:
-        - oauth.kberen.com
-      secretName: le-tls
+        - oauth.cberen.com
+      secretName: cberen-tls
   rules:
-  - host: oauth.kberen.com
+  - host: oauth.cberen.com
     http:
       paths:
         - path: /

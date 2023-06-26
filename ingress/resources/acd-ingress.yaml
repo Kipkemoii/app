@@ -5,17 +5,17 @@ metadata:
 spec:
   ingressClassName: nginx
   tls:
-  - hosts:
-      - academy.kberen.com
-    secretName: le-tls
+    - hosts:
+        - academy.cberen.com
+      secretName: cberen-tls
   rules:
-  - host: academy.kberen.com
-    http:
-      paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service: 
-              name: academy-svc
-              port: 
-                number: 3000
+    - host: academy.cberen.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service: 
+                name: academy-svc
+                port: 
+                  number: 3000

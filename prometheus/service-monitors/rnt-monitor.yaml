@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+  name: rnt-app
+  namespace: default
+spec:
+  endpoints:
+  - interval: 30s
+    port: rnt
+  selector:
+    matchLabels:
+      app: rnt-app

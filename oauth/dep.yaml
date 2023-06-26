@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: oauth-svc
+  labels:
+    app: oauth-app
 spec:
   selector:
     app: oauth
