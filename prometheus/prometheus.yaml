@@ -1,5 +1,5 @@
-apiVersion: monitoring.coreos.com/v1
-kind: Prometheus
+apiVersion: v1
+kind: Service
 metadata:
   labels:
     app.kubernetes.io/component: prometheus
@@ -7,6 +7,27 @@ metadata:
     app.kubernetes.io/name: prometheus
     app.kubernetes.io/part-of: kube-prometheus
     app.kubernetes.io/version: 2.45.0
+  name: prometheus-service
+  namespace: monitoring
+spec:
+  type: LoadBalancer
+  ports:
+  - name: web
+    port: 9090
+    targetPort: web
+  - name: reloader-web
+    port: 8080
+    targetPort: reloader-web
+  selector:
+    promethes-service: app
+  sessionAffinity: ClientIP
+---
+
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  labels:
+    promethes-service: app
   name: services
   namespace: monitoring
 spec:

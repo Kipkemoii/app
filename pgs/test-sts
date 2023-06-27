@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: pgs-svc
+  name: postgres
 spec:
   selector:
-    app: pgs
+    app: postgres
   ports:
-    - name: pgs
+    - name: postgres
       port: 5432
       targetPort: 5432
   type: LoadBalancer
@@ -15,27 +15,20 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: pgs
+  name: postgres
 spec:
   selector:
     matchLabels:
-      app: pgs
-  replicas: 1
+      app: postgres
+  replicas: 3
   template:
     metadata:
       labels:
-        app: pgs
+        app: postgres
     spec:
       containers:
-        - name: pgs
+        - name: postgres
           image: docker.io/library/postgres:15-alpine
-          args:
-            - "-c"
-            - "ssl=on"
-            - "-c"
-            - "ssl_cert_file=/opt/tls/..data/cert.pem"
-            - "-c"
-            - "ssl_key_file=/opt/tls/..data/priv-key.pem"
           env:
             - name: POSTGRES_DB
               value: postgres
@@ -55,15 +48,8 @@ spec:
           volumeMounts:
             - name: pgs-volume
               mountPath: /var/lib/postgresql/data
-            - name: keb-certs
-              mountPath: /opt/tls
       securityContext:
         fsGroup: 70
-      volumes:
-        - name: keb-certs
-          secret:
-            secretName: keb-tls
-            defaultMode: 0640
   volumeClaimTemplates:
     - metadata:
         name: pgs-volume
