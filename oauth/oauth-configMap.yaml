@@ -20,6 +20,6 @@ data:
   PGS_TCP_PORT: '5432'
   PGS_SSLMODE: allow
   ROLE_ID: ac37e86c-5f95-8f99-5ead-9b6846a3a51e
-  SECRET_ID: 94f61d75-9ad8-4cbe-60fd-b7a87f8ba6ee
+  SECRET_ID: 5dd76a47-80e3-7b0e-6385-944cd314b3a4
 
 

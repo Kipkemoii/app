@@ -16,7 +16,7 @@ data:
   PGS_TCP_PORT: '5432'
   PGS_SSLMODE: allow
   ROLE_ID: 32b92e59-ba00-d394-26e1-b466cd91b1c3
-  SECRET_ID: 7ca64168-3c03-4e74-6843-7dd9dcdc4e32
+  SECRET_ID: d7c65609-72cc-5d77-a879-ea6a10bcf00a
   TARGET_DB: aut
   AUT_PROTO: http
   AUT_IP: aut-svc.default

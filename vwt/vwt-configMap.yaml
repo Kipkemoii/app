@@ -27,7 +27,7 @@ data:
   MPS_HTTP_PORT: '4300'
   TARGET_DB: vwt
   ROLE_ID: 6ac509a4-e136-fdcb-f246-71f9115d8b1a
-  SECRET_ID: bc281ba6-35cc-9a56-4eab-06a0ac1c798b
+  SECRET_ID: 0060f808-bd1a-1261-3cf9-837f312f5b53
   VWT_PROTO: http
   VWT_IP: 'aut-svc.default.svc.cluster.local'
   VWT_HTTP_PORT: '4500'

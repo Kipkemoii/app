@@ -11,7 +11,7 @@ spec:
     - name: mgo
       port: 27017
       targetPort: 27017
-  type: LoadBalancer
+  clusterIP: None
 
 ---
 apiVersion: apps/v1
@@ -42,7 +42,7 @@ spec:
                 secretKeyRef:
                   key: password
                   name: mgo-secret
-          args: ["--tlsMode=requireTLS", "--tlsCertificateKeyFile=/opt/tls/cert-with-key.pem"]
+          args: ["--tlsMode=requireTLS", "--tlsCertificateKeyFile=/opt/tls/cert.pem"]
           ports:
             - name: mgo
               containerPort: 27017
@@ -50,8 +50,7 @@ spec:
           - mongod
           - "--replSet"
           - rs1
-          - "--bind_ip"
-          - 0.0.0.0
+          - "--bind_ip_all"
           resources:
             limits:
               cpu: 500m
@@ -61,7 +60,7 @@ spec:
           volumeMounts:
             - name: mgo-volume
               mountPath: /data/db
-            - name: keb-certs
+            - name: tls-certs
               mountPath: /opt/tls
       volumes:
         - name: tls-certs
